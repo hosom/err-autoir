@@ -50,7 +50,7 @@ class AutoIR(BotPlugin):
 		the response to alerts.
 		'''	
 
-		alert = parse_alert(msg)
+		alert = parse_alert(msg.body)
 		# Do some sanity checking
 		if alert is None or alert.get('alert') is None:
 			yield "That alert doesn't parse properly. Giving up."
