@@ -1,6 +1,6 @@
 import json
 
-from actions import *
+from importlib import import_module
 from errbot import BotPlugin, botcmd
 
 def parse_alert(alert):
@@ -20,20 +20,14 @@ def parse_alert(alert):
 
 	return parsed_alert
 
-def execute_flow(alert, flow):
-	'''
-	'''
-
-	for action in flow['actions']:
-		mod = locals().get(action.get('name'))
-		if mod == None:
-			yield "Action %s cannot be found" % (action.get('name'))
-			continue
-		yield mod.action(action.get('field'), action.get('kwargs'))
-		yield "performing action %s for alert %s" % (action, alert)
-
 class AutoIR(BotPlugin):
 	'''Plugin utilized to automate Incident Response tasks'''
+
+	def __init__(self, bot):
+		super().__init__(bot)
+
+		# Where possible actions are dynamically loaded
+		self.actions = {}
 
 	def get_configuration_template(self):
 		'''Define the configuration template for the plugin.
@@ -65,8 +59,24 @@ class AutoIR(BotPlugin):
 
 		for flow in self.config['alerts']:
 			if flow['alert'] == alert.get('alert'):
-				for task in execute_flow(alert, flow):
+				for task in self.execute_flow(alert, flow):
 					yield task
 
 		# This is unnecessary, but it helps me sleep at night
 		raise StopIteration
+
+	def execute_flow(self, alert, flow):
+	'''
+	'''
+		action_name = action.get('name')
+		for action in flow['actions']:
+			mod = self.actions.get(action_name)
+			if mod == None:
+				try:
+					self.actions[action_name] = import_module('actions.%s' % action_name)
+					mod = self.actions.get(action_name)
+				except ImportError:
+					yield "Unable to find action %s, skipping task." % (action_name)
+					continue
+			yield "performing action %s for alert %s" % (action_name, alert)
+			yield mod.act(alert, action.get('field'), action.get('kwargs'))
