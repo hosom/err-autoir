@@ -36,7 +36,6 @@ class AutoIR(BotPlugin):
 					'kwargs': {'some_arg':'test'}
 					}]
 				}]
-			]
 		}
 
 	@botcmd(admin_only=False)
