@@ -25,6 +25,11 @@ def execute_flow(alert, flow):
 	'''
 
 	for action in flow['actions']:
+		mod = locals().get(action.get('name'))
+		if mod == None:
+			yield "Action %s cannot be found" % (action.get('name'))
+			continue
+		yield mod.action(action.get('field'), action.get('kwargs'))
 		yield "performing action %s for alert %s" % (action, alert)
 
 class AutoIR(BotPlugin):
