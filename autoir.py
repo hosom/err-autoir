@@ -79,4 +79,7 @@ class AutoIR(BotPlugin):
 					yield "Unable to find action %s, skipping task." % (action_name)
 					continue
 			yield "performing action %s for alert %s" % (action_name, alert)
-			yield mod.act(alert, action.get('field'), action.get('kwargs'))
+			try:
+				yield mod.action(alert, action.get('field'), action.get('kwargs'))
+			except AttributeError:
+				yield "Action %s has no action function, so I'm not sure what to do here." % (action_name)
