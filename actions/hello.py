@@ -1,2 +1,2 @@
-def action(s, kwargs):
+def action(alert, field, kwargs):
 	return "Hello, %s" % (s)
