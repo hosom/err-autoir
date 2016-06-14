@@ -2,22 +2,28 @@ import json
 
 from errbot import BotPlugin, botcmd
 
-def parse_config(config):
-	'''Parses a json string describing automatic actions into a dictionary.
+def parse_alert(alert):
+	'''Parses a json string describing an alert.
 
 	Args:
-		config (str): the json string for alert flows. 
+		config (str): the json string for alerts. 
 
 	Returns:
-		dict: the parsed configuration, or None on error
+		dict: the parsed alert, or None on error
 	'''
 
 	try:
-		parsed_config = json.loads(config)
+		parsed_config = json.loads(alert)
 	except ValueError:
 		return None
 
 	return parse_config
+
+def execute_flow(alert, flow):
+	'''
+	'''
+
+	yield "executing flow %s for alert %s" % (flow, alert)
 
 class AutoIR(BotPlugin):
 	'''Plugin utilized to automate Incident Response tasks'''
@@ -44,4 +50,13 @@ class AutoIR(BotPlugin):
 		the response to alerts.
 		'''	
 
-		return 'Hello, World!'
+		alert = parse_alert(msg)
+		# Do some sanity checking
+		if alert is None or alert.get('alert') is None:
+			yield "That alert doesn't parse properly. Giving up."
+			raise StopIteration
+
+		for flow in self.config['alerts']:
+			if flow['alert'] == alert.get('alert'):
+				for task in execute_flow(alert, flow):
+					yield task
