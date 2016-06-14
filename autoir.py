@@ -1,5 +1,6 @@
 import json
 
+from actions import *
 from errbot import BotPlugin, botcmd
 
 def parse_alert(alert):
@@ -61,3 +62,6 @@ class AutoIR(BotPlugin):
 			if flow['alert'] == alert.get('alert'):
 				for task in execute_flow(alert, flow):
 					yield task
+
+		# This is unnecessary, but it helps me sleep at night
+		raise StopIteration
