@@ -33,7 +33,7 @@ class AutoIR(BotPlugin):
 					{
 					'name':'hello',
 					'field':'bar',
-					'kwargs': {'some_arg':'test'}
+					'kwargs': {}
 					}]
 				}]
 		}
