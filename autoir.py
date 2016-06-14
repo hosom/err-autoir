@@ -68,8 +68,8 @@ class AutoIR(BotPlugin):
 	def execute_flow(self, alert, flow):
 		'''
 		'''
-		action_name = action.get('name')
 		for action in flow['actions']:
+			action_name = action.get('name')
 			mod = self.actions.get(action_name)
 			if mod == None:
 				try:
