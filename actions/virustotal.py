@@ -18,7 +18,7 @@ def action(alert, field, kwargs):
 	'''
 
 	config = ConfigParser()
-	config.read('virustotal.conf')
+	config.read('/etc/err/virustotal.conf')
 
 	_VT_APIKEY = config.get('VirusTotal', 'apikey')
 
