@@ -16,6 +16,8 @@ def action(alert, field, kwargs):
 	if _VT_APIKEY is None:
 		return 'Your VirusTotal API key has not been configured. Skipping VirusTotal action'
 
+	return alert.get(field)
+
 	parameters = {
 		'resource' : alert.get(field),
 		'apikey' : _VT_APIKEY
