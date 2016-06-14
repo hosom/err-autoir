@@ -66,8 +66,8 @@ class AutoIR(BotPlugin):
 		raise StopIteration
 
 	def execute_flow(self, alert, flow):
-	'''
-	'''
+		'''
+		'''
 		action_name = action.get('name')
 		for action in flow['actions']:
 			mod = self.actions.get(action_name)
