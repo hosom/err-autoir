@@ -27,6 +27,7 @@ class AutoIR(BotPlugin):
 		'''
 		return {
 			'alerts' : [
+				{
 				'alert':'foo',
 				'actions' : [
 					{
@@ -34,12 +35,13 @@ class AutoIR(BotPlugin):
 					'field':'bar',
 					'kwargs': {'some_arg':'test'}
 					}
+				}
 				]
 			]
 		}
 
 	@botcmd(admin_only=False)
-	def ir_alert(self, msg, args):
+	def alert(self, msg, args):
 		'''Add the alert command to errbot. This command is used to automate
 		the response to alerts.
 		'''	
