@@ -39,7 +39,7 @@ class AutoIR(BotPlugin):
 		}
 
 	@botcmd(admin_only=False)
-	def alert(self, msg, args):
+	def ir_alert(self, msg, args):
 		'''Add the alert command to errbot. This command is used to automate
 		the response to alerts.
 		'''	
