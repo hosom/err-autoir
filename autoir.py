@@ -23,7 +23,8 @@ def execute_flow(alert, flow):
 	'''
 	'''
 
-	yield "executing flow %s for alert %s" % (flow, alert)
+	for action in flow['actions']:
+		yield "performing action %s for alert %s" % (action, alert)
 
 class AutoIR(BotPlugin):
 	'''Plugin utilized to automate Incident Response tasks'''
