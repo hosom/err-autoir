@@ -13,11 +13,11 @@ def parse_alert(alert):
 	'''
 
 	try:
-		parsed_config = json.loads(alert)
+		parsed_alert = json.loads(alert)
 	except ValueError:
 		return None
 
-	return parse_config
+	return parsed_alert
 
 def execute_flow(alert, flow):
 	'''
