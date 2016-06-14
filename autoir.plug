@@ -1,0 +1,9 @@
+[Core]
+Name = AutoIR
+Module = autoir
+
+[Documentation]
+Descriptinon = Automation framework for incident response
+
+[Python]
+Version = 3
