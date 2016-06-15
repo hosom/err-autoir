@@ -61,4 +61,4 @@ No records found in Splunk.
 		# This will print the raw log record on each line
 		records = '\n'.join([record.get('_raw') for 
 			record in results])
-	return '''```%s```''' % (records)
+	return '''``````%s``````''' % (records)
