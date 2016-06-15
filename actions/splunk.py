@@ -1,7 +1,9 @@
 import json
+import sys
 
-from io import StringIO
 from subprocess import Popen, PIPE
+
+_ENCODING = sys.getdefaultencoding()
 
 def action(alert, field, kwargs):
 	'''
@@ -24,10 +26,17 @@ def action(alert, field, kwargs):
 		"--config=/etc/err/splunk.conf",
 		"--output_mode=json"]
 
-	output = StringIO()
 	proc = Popen(cmd, stdout=PIPE, stderr=PIPE)
 
-	for line in proc.stdout:
-		output.write(line)
+	output = [line.decode(_ENCODING) for line in proc.stdout]
+	output = ''.join(output)
 
-	return output.getvalue()
+	alert['splunk'] = json.loads(output.strip("b'").strip())
+
+	records = '\n'.join([record['_raw'] for 
+		record in alert['splunk']['results']])
+	return '''
+```
+%s
+```
+''' % (records)
