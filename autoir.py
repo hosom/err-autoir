@@ -60,12 +60,7 @@ class AutoIR(BotPlugin):
 		for flow in self.config['alerts']:
 			if flow['alert'] == alert.get('alert'):
 				for task in self.execute_flow(alert, flow):
-					yield '''
-```
-%s
-```
-''' % (task)
-					#self.send(msg.to, task)
+					yield task
 
 		# This is unnecessary, but it helps me sleep at night
 		raise StopIteration
@@ -83,7 +78,6 @@ class AutoIR(BotPlugin):
 				except ImportError:
 					yield "Unable to find action %s, skipping task." % (action_name)
 					continue
-			#yield "performing action %s for alert %s" % (action_name, alert)
 			try:
 				yield mod.action(alert, action.get('field'), action.get('kwargs'))
 			except AttributeError:
