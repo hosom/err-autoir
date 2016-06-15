@@ -33,7 +33,7 @@ def action(alert, field, kwargs):
 
 	alert['splunk'] = json.loads(output.strip("b'").strip())
 
-	records = '\n'.join([record['_raw'] for 
+	records = '\n'.join([record.get('_raw') for 
 		record in alert['splunk']['results']])
 	return '''
 ```
