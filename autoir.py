@@ -60,7 +60,11 @@ class AutoIR(BotPlugin):
 		for flow in self.config['alerts']:
 			if flow['alert'] == alert.get('alert'):
 				for task in self.execute_flow(alert, flow):
-					yield "```" + task + "```"
+					yield '''
+```
+%s
+```
+''' % (task)
 					#self.send(msg.to, task)
 
 		# This is unnecessary, but it helps me sleep at night
