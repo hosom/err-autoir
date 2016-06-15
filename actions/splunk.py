@@ -33,8 +33,34 @@ def action(alert, field, kwargs):
 
 	alert['splunk'] = json.loads(output.strip("b'").strip())
 
-	records = '\n'.join([record.get('_raw') for 
-		record in alert['splunk']['results']])
+	results = alert['splunk']['results']
+	if len(results) < 1:
+		return '''
+```
+No records found in Splunk.
+```
+'''
+	
+	# If the _raw field is missing, then a stats command was used and we
+	# need to change what the output will look like.
+	raw_missing = False
+	for result in results:
+		if result.get('_raw') == None:
+			raw_missing = True
+
+	# This should print a tab delimited table.
+	if raw_missing:
+		records = []
+		for result in results:
+			line = ''
+			for key in result:
+				line = '%s\t%s' % (line, result[key])
+			records.append(line)
+		records = '\n'.join(records)
+	else:
+		# This will print the raw log record on each line
+		records = '\n'.join([record.get('_raw') for 
+			record in results])
 	return '''
 ```
 %s
