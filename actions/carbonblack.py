@@ -49,5 +49,5 @@ CarbonBlack
 No results returned.
 ```
 '''
-	
+	alert['cb'] = report
 	return report
