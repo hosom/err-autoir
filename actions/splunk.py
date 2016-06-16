@@ -36,9 +36,10 @@ def action(alert, field, kwargs):
 	results = alert['splunk']['results']
 	if len(results) < 1:
 		return '''
-```
-No records found in Splunk.
-```
+\`\`\`
+Splunk
+No records found.
+\`\`\`
 '''
 	
 	# If the _raw field is missing, then a stats command was used and we
