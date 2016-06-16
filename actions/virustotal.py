@@ -26,11 +26,11 @@ def action(alert, field, kwargs):
 	report = r.json()
 	if report.get('response_code') == 1:
 		return '''
-```
+\`\`\`
 VirusTotal
 %s
 %s/%s
-```
+\`\`\`
 For more information see: %s
 ''' % (report['scan_date'], 
 		report['positives'], 
@@ -38,8 +38,8 @@ For more information see: %s
 		report['permalink'])
 	else:
 		return '''
-```
+\`\`\`
 VirusTotal
 File not found.
-```
+\`\`\`
 '''
