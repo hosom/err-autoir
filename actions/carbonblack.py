@@ -21,6 +21,7 @@ def action(alert, field, kwargs):
 	search = kwargs['query'] % (alert.get(field))   
 	try:
 		results = query.where(search)
+		total = len(results)
 		for proc in results[:5]:
 			procs.append(proc)
 	except:
@@ -29,7 +30,7 @@ def action(alert, field, kwargs):
 
 	if len(procs) > 0:
 		url = "https://cb.battelle.org/#search/cb.urlver=1&q=" + search + "&sort=&rows=10&start=0"
-		report = "CarbonBlack\nWeb UI Query Link: %s" % (url)
+		report = "CarbonBlack\nWeb UI Query Link: %s\nTotal Number of Processes: %s" % (url,total)
 		for proc in procs:
 			report += '''
 \`\`\`
