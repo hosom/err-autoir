@@ -63,6 +63,7 @@ No records found in Splunk.
 			record in results])
 	return '''
 \`\`\`
+Splunk
 %s
 \`\`\`
 ''' % (records)
