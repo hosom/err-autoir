@@ -48,7 +48,7 @@ def action(alert, fields, kwargs):
 
 
 	if len(procs) > 0:
-		url = '%s/#search/cb.urlver=1&q=cb.url%s&sort=&rows=10&start=0' % (cb.url, search)
+		url = '%s/#search/cb.urlver=1&q=%s&sort=&rows=10&start=0' % (cb.url, search)
 		report = "CarbonBlack\nWeb UI Query Link: %s\nTotal Number of Processes: %s" % (url,total)
 		for proc in procs:
 			report += '''
