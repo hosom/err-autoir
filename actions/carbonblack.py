@@ -16,9 +16,10 @@ def action(alert, fields, kwargs):
 	if cb is None:
 		return 'Could not create CarbonBlack connection. API key may have not been configured for cbapi. Skipping CB action.'
 
+	parameters = [alert.get(field) for field in fields]
 
 	query = cb.select(Process)
-	search = kwargs['query'] % tuple(alert.get(fields))   
+	search = kwargs['query'] % tuple(parameters)   
 	try:
 		results = query.where(search)
 		total = len(results)
