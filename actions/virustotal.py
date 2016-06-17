@@ -4,7 +4,7 @@ from configparser import ConfigParser
 
 _VTAPI = 'https://www.virustotal.com/vtapi/v2/'
 
-def action(alert, field, kwargs):
+def action(alert, fields, kwargs):
 	'''Perform a virus total lookup of a hash.
 	'''
 
@@ -17,7 +17,7 @@ def action(alert, field, kwargs):
 		return 'Your VirusTotal API key has not been configured. Skipping VirusTotal action'
 
 	parameters = {
-		'resource' : alert.get(field[0]),
+		'resource' : alert.get(fields[0]),
 		'apikey' : _VT_APIKEY
 	}
 

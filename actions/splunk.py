@@ -15,8 +15,10 @@ def action(alert, fields, kwargs):
 
 	search = kwargs.get('query')
 
+	parameters = [alert.get(field) for field in fields]
+
 	try:
-		search = search % tuple(alert.get(fields))
+		search = search % tuple(parameters)
 	except TypeError:
 		return "Unable to compile query string."
 
