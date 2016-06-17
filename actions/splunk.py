@@ -34,8 +34,8 @@ def action(alert, fields, kwargs):
 	output = ''.join(output)
 
 	alert['splunk'] = json.loads(output.strip("b'").strip())
-
-	results = alert['splunk']['results']
+	alert['splunk'] = alert['splunk']['results']
+	results = alert['splunk']
 	if len(results) < 1:
 		return '''
 \`\`\`
