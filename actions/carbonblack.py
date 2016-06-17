@@ -3,7 +3,7 @@ import json
 
 
 
-def action(alert, field, kwargs):
+def action(alert, fields, kwargs):
 	'''
 	Perform a Carbon Black lookup.
 	'''
@@ -18,7 +18,7 @@ def action(alert, field, kwargs):
 
 
 	query = cb.select(Process)
-	search = kwargs['query'] % (alert.get(field))   
+	search = kwargs['query'] % tuple(alert.get(fields))   
 	try:
 		results = query.where(search)
 		total = len(results)

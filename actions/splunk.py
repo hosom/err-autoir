@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE
 
 _ENCODING = sys.getdefaultencoding()
 
-def action(alert, field, kwargs):
+def action(alert, fields, kwargs):
 	'''
 	'''
 	try:
@@ -16,7 +16,7 @@ def action(alert, field, kwargs):
 	search = kwargs.get('query')
 
 	try:
-		search = search % (alert.get(field))
+		search = search % tuple(alert.get(fields))
 	except TypeError:
 		return "Unable to compile query string."
 

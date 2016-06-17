@@ -39,7 +39,7 @@ class AutoIR(BotPlugin):
 				'actions' : [
 					{
 					'name':'hello',
-					'field':'bar',
+					'fields':['bar'],
 					'kwargs': 'json string describing the kwargs'
 					}]
 				}]
@@ -79,6 +79,6 @@ class AutoIR(BotPlugin):
 					yield "Unable to find action %s, skipping task." % (action_name)
 					continue
 			try:
-				yield mod.action(alert, action.get('field'), action.get('kwargs'))
+				yield mod.action(alert, action.get('fields'), action.get('kwargs'))
 			except AttributeError:
 				yield "Action %s has no action function, so I'm not sure what to do here." % (action_name)
