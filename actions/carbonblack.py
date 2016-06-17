@@ -4,8 +4,26 @@ import json
 
 
 def action(alert, fields, kwargs):
-	'''
-	Perform a Carbon Black lookup.
+	'''Perform a Carbon Black lookup.
+
+	This depends on a configuration file that will be stored at 
+	/etc/carbonblack/credentials.response
+
+	[default]
+	url=https://cb.battelle.org/
+	token=<APIKEY>
+	ssl_verify=False
+
+	Args:
+		alert (dict): The alert that is being automated.
+		fields (list): A list of fields in the alert dict to perform the
+		query with.
+		kwargs (str): Normally kwargs would be a dict, however, due to 
+		complications in errbot, in this case it is a string that parses
+		with python's json parser.
+
+	Returns:
+		str: the query response from carbon black.
 	'''
 
 	cb = CbEnterpriseResponseAPI(profile="default") 
@@ -30,8 +48,7 @@ def action(alert, fields, kwargs):
 
 
 	if len(procs) > 0:
-		url = "https://cb.battelle.org/#search/cb.urlver=1&q=" + search + "&sort=&rows=10&start=0"
-		report = "CarbonBlack\nWeb UI Query Link: %s\nTotal Number of Processes: %s" % (url,total)
+		report = ''
 		for proc in procs:
 			report += '''
 \`\`\`
